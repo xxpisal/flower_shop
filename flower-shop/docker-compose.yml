@@ -1,0 +1,37 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flower-shop-web:latest
+    container_name: flower-shop-web
+    ports:
+      - "8222:8222"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=flowerdb
+      - DB_USER=floweruser
+      - DB_PASSWORD=flowerpass
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    image: flower-shop-db:latest
+    container_name: flower-shop-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=flowerdb
+      - POSTGRES_USER=floweruser
+      - POSTGRES_PASSWORD=flowerpass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:

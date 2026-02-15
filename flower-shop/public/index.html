@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Bloom & Petal - Fresh flowers delivered to your door. Browse our beautiful collection of roses, sunflowers, orchids and more.">
+  <title>Bloom & Petal — Fresh Flowers Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-content">
+      <a href="#" class="logo">🌸 Bloom & Petal</a>
+      <ul class="nav-links">
+        <li><a href="#catalog">Flowers</a></li>
+        <li><a href="#about">About</a></li>
+        <li id="auth-nav">
+          <button class="btn btn-outline btn-nav" onclick="showAuthModal('login')">Login</button>
+          <button class="btn btn-primary btn-nav" onclick="showAuthModal('signup')">Sign Up</button>
+        </li>
+        <li id="user-nav" style="display:none;">
+          <span class="user-greeting" id="user-greeting">Hi, User</span>
+          <button class="btn btn-outline btn-nav" onclick="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container hero-content">
+      <span class="hero-badge">🌿 Free delivery on orders over $50</span>
+      <h1>Beautiful Flowers<br>for Every Moment</h1>
+      <p>Hand-picked, farm-fresh blooms delivered right to your doorstep. Make every occasion unforgettable.</p>
+      <a href="#catalog" class="btn btn-primary btn-lg">Browse Collection →</a>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600&h=700&fit=crop"
+        alt="Beautiful flower arrangement" loading="eager">
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="container features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🚚</span>
+        <h3>Same-Day Delivery</h3>
+        <p>Order before 2 PM for same-day delivery</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🌱</span>
+        <h3>Farm Fresh</h3>
+        <p>Sourced directly from local farms</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💝</span>
+        <h3>Gift Wrapping</h3>
+        <p>Premium wrapping included free</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⭐</span>
+        <h3>5-Star Rated</h3>
+        <p>Loved by 10,000+ happy customers</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog -->
+  <section class="catalog" id="catalog">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Our Collection</span>
+        <h2>Fresh From The Garden</h2>
+        <p>Each bouquet is hand-arranged with care and delivered at peak freshness.</p>
+      </div>
+      <div class="flower-grid" id="flower-grid">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading flowers...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="container about-content">
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=500&h=600&fit=crop" alt="Our flower shop"
+          loading="lazy">
+      </div>
+      <div class="about-text">
+        <span class="section-badge">Our Story</span>
+        <h2>Bringing Joy Through Flowers Since 2020</h2>
+        <p>At Bloom & Petal, we believe every flower tells a story. Our passionate team selects only the finest blooms
+          from sustainable farms, ensuring each arrangement is a masterpiece of nature.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <strong>10K+</strong>
+            <span>Orders Delivered</span>
+          </div>
+          <div class="stat">
+            <strong>50+</strong>
+            <span>Flower Varieties</span>
+          </div>
+          <div class="stat">
+            <strong>4.9</strong>
+            <span>Customer Rating</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeAuthModal()">&times;</button>
+
+      <!-- Login Form -->
+      <div id="login-form-container">
+        <div class="modal-header">
+          <h2>Welcome Back 🌸</h2>
+          <p>Sign in to your account</p>
+        </div>
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="Enter your password" required>
+          </div>
+          <p class="form-error" id="login-error"></p>
+          <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+        </form>
+        <p class="form-switch">Don't have an account? <a href="#" onclick="switchAuth('signup')">Sign up</a></p>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signup-form-container" style="display:none;">
+        <div class="modal-header">
+          <h2>Create Account 🌷</h2>
+          <p>Join our flower-loving community</p>
+        </div>
+        <form id="signup-form" onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label for="signup-name">Full Name</label>
+            <input type="text" id="signup-name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" placeholder="Min 6 characters" minlength="6" required>
+          </div>
+          <p class="form-error" id="signup-error"></p>
+          <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+        </form>
+        <p class="form-switch">Already have an account? <a href="#" onclick="switchAuth('login')">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Modal -->
+  <div class="modal-overlay" id="order-modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+      <div class="modal-header">
+        <img id="order-flower-img" class="modal-flower-img" src="" alt="">
+        <h2 id="modal-title">Order Flower</h2>
+        <p id="modal-price" class="modal-price">$0.00 each</p>
+      </div>
+      <form id="order-form" onsubmit="handleOrder(event)">
+        <input type="hidden" id="flower-id">
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <div class="quantity-control">
+            <button type="button" class="qty-btn" onclick="changeQty(-1)">−</button>
+            <input type="number" id="quantity" min="1" max="99" value="1" required>
+            <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <p class="order-total">Total: <strong id="order-total">$0.00</strong></p>
+        <button type="submit" class="btn btn-primary btn-full">Place Order 🌸</button>
+      </form>
+      <div class="order-success" id="order-success" style="display:none;">
+        <span class="success-icon">✅</span>
+        <h3>Order Placed!</h3>
+        <p>Thank you! Your flowers are on the way.</p>
+        <button class="btn btn-outline" onclick="closeOrderModal()" style="margin-top:16px;">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <h3>🌸 Bloom & Petal</h3>
+        <p>Making the world more beautiful, one bouquet at a time.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="#catalog">Shop Flowers</a>
+        <a href="#about">About Us</a>
+      </div>
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <a href="#">hello@bloomandpetal.com</a>
+        <a href="#">+1 (555) 123-4567</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Bloom & Petal. All rights reserved. | Built with 💜</p>
+    </div>
+  </footer>
+
+  <script>
+    // ========== STATE ==========
+    let flowers = [];
+    let currentFlower = null;
+    let currentUser = null;
+
+    // ========== AUTH ==========
+    function showAuthModal(mode) {
+      switchAuth(mode);
+      document.getElementById('auth-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('login-error').textContent = '';
+      document.getElementById('signup-error').textContent = '';
+    }
+
+    function switchAuth(mode) {
+      document.getElementById('login-form-container').style.display = mode === 'login' ? 'block' : 'none';
+      document.getElementById('signup-form-container').style.display = mode === 'signup' ? 'block' : 'none';
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const errEl = document.getElementById('login-error');
+      errEl.textContent = '';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('login-email').value,
+            password: document.getElementById('login-password').value,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) { errEl.textContent = data.error; return; }
+
+        currentUser = data;
+        updateAuthUI();
+        closeAuthModal();
+      } catch { errEl.textContent = 'Network error'; }
+    }
+
+    async function handleSignup(e) {
+      e.preventDefault();
+      const errEl = document.getElementById('signup-error');
+      errEl.textContent = '';
+
+      try {
+        const res = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('signup-name').value,
+            email: document.getElementById('signup-email').value,
+            password: document.getElementById('signup-password').value,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) { errEl.textContent = data.error; return; }
+
+        currentUser = data;
+        updateAuthUI();
+        closeAuthModal();
+      } catch { errEl.textContent = 'Network error'; }
+    }
+
+    async function logout() {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      currentUser = null;
+      updateAuthUI();
+    }
+
+    function updateAuthUI() {
+      const authNav = document.getElementById('auth-nav');
+      const userNav = document.getElementById('user-nav');
+      if (currentUser) {
+        authNav.style.display = 'none';
+        userNav.style.display = 'flex';
+        document.getElementById('user-greeting').textContent = `Hi, ${currentUser.name}`;
+      } else {
+        authNav.style.display = 'flex';
+        userNav.style.display = 'none';
+      }
+    }
+
+    async function checkAuth() {
+      try {
+        const res = await fetch('/api/auth/me');
+        if (res.ok) {
+          currentUser = await res.json();
+          updateAuthUI();
+        }
+      } catch { }
+    }
+
+    // ========== FLOWERS ==========
+    async function loadFlowers() {
+      try {
+        const res = await fetch('/api/flowers');
+        flowers = await res.json();
+        renderFlowers();
+      } catch {
+        document.getElementById('flower-grid').innerHTML =
+          '<p class="error-msg">Could not load flowers. Please check your connection.</p>';
+      }
+    }
+
+    function renderFlowers() {
+      const grid = document.getElementById('flower-grid');
+      grid.innerHTML = flowers.map(f => `
+        <div class="flower-card">
+          <div class="flower-card-img">
+            <img src="${f.image_url}" alt="${f.name}" loading="lazy">
+            <span class="flower-category">${f.category}</span>
+          </div>
+          <div class="flower-card-body">
+            <h3>${f.name}</h3>
+            <p>${f.description}</p>
+            <div class="flower-card-footer">
+              <span class="flower-price">$${parseFloat(f.price).toFixed(2)}</span>
+              <button class="btn btn-sm" onclick="openOrder(${f.id})">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ========== ORDERS ==========
+    function openOrder(id) {
+      if (!currentUser) {
+        showAuthModal('login');
+        return;
+      }
+
+      currentFlower = flowers.find(f => f.id === id);
+      if (!currentFlower) return;
+
+      document.getElementById('order-flower-img').src = currentFlower.image_url;
+      document.getElementById('order-flower-img').alt = currentFlower.name;
+      document.getElementById('modal-title').textContent = currentFlower.name;
+      document.getElementById('modal-price').textContent = `$${parseFloat(currentFlower.price).toFixed(2)} each`;
+      document.getElementById('flower-id').value = currentFlower.id;
+      document.getElementById('quantity').value = 1;
+      updateTotal();
+
+      document.getElementById('order-success').style.display = 'none';
+      document.getElementById('order-form').style.display = 'block';
+      document.getElementById('order-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeOrderModal() {
+      document.getElementById('order-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function changeQty(delta) {
+      const input = document.getElementById('quantity');
+      const val = Math.max(1, Math.min(99, parseInt(input.value) + delta));
+      input.value = val;
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const qty = parseInt(document.getElementById('quantity').value) || 1;
+      document.getElementById('order-total').textContent = `$${(currentFlower.price * qty).toFixed(2)}`;
+    }
+
+    async function handleOrder(e) {
+      e.preventDefault();
+      try {
+        const res = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            flower_id: parseInt(document.getElementById('flower-id').value),
+            quantity: parseInt(document.getElementById('quantity').value),
+          }),
+        });
+
+        if (res.ok) {
+          document.getElementById('order-form').style.display = 'none';
+          document.getElementById('order-success').style.display = 'block';
+        } else if (res.status === 401) {
+          closeOrderModal();
+          showAuthModal('login');
+        } else {
+          alert('Failed to place order. Please try again.');
+        }
+      } catch { alert('Network error. Please try again.'); }
+    }
+
+    document.getElementById('quantity').addEventListener('input', updateTotal);
+
+    // Close modals on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    // Scroll navbar
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Init
+    checkAuth();
+    loadFlowers();
+  </script>
+</body>
+
+</html>
