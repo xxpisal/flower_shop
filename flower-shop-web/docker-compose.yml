@@ -6,7 +6,7 @@ services:
     image: flower-shop-web:latest
     container_name: flower-shop-web
     ports:
-      - "8222:8222"
+      - "8000:8000"
     environment:
       - DB_HOST=db
       - DB_PORT=5432
